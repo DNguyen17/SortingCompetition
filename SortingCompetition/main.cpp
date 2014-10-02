@@ -1,3 +1,6 @@
+//Danh Nguyen
+//Brendan Celii
+
 #include <iostream>
 #include <chrono>
 #include <ctime>

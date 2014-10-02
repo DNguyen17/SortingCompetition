@@ -76,9 +76,8 @@ void SortingCompetition::outputData(const string& outputFileName)
 
 }
 
-// -1 if str1 shorter than str2
-// 1 if str1 longer than str2
-// if same length use strcmp
+//PRIVATE FUNCTIONS IMPLEMENTATION
+
 int SortingCompetition::compareWords(char* str1, char* str2)
 {
     if (strlen(str1) < strlen(str2))
@@ -95,3 +94,8 @@ int SortingCompetition::compareWords(char* str1, char* str2)
         return strcmp(str1, str2);
     }
 }
+
+/*void quicksort(vector<char*>& wordArr, size_t start, size_t end)
+{
+
+}*/

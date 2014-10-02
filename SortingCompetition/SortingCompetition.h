@@ -13,9 +13,11 @@ class SortingCompetition
 private:
     ifstream fin;
     ofstream fout;
+    int setDataSize; //for switching algorithms based on size
     vector<char*> words;
     vector<char*> words2;
     int compareWords(char* one, char* str2);
+    void quicksort(vector<char*>& wordArr, size_t start, size_t end);
 
 
 public:
