@@ -43,6 +43,14 @@ private:
     void bubbleSort(void);
     void quicksort(vector<char*>& wordArr, size_t start, size_t end);
 
+    void merge(int low, int middle, int high);
+    void mergeSort(int left, int right);
+
+    //tester functions
+    void algorithmTester(void);
+
+    void makingRandomFile(int size,char* name);
+
 public:
     SortingCompetition(const string& inputFileName);
     ~SortingCompetition();

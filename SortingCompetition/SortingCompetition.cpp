@@ -109,9 +109,8 @@ bool SortingCompetition::readData(){
         //copy word into chra* pointer
         strcpy(words.at(words.size()-1),buffer.c_str());
     }
-
-    //set wordcount after input function finishes
     setWordCount(words.size());
+
     //close input file
     fin.close();
     //function complete so return true as success
@@ -157,7 +156,11 @@ bool SortingCompetition::prepareData(){
         newString[0] = length;
         //add prefix to beginning of word
         strcpy(&(newString[1]),words[i]);
-
+        /*char* dummy = newString;
+        cout<<newString<<endl;
+        cout<<newString[0]<<endl;
+        cout<<"length of string "<<strlen(newString)<<endl;
+        cout<<&(newString[1])<<endl;*/
         //add new length prefixed string to end of words2
         words2[i] = newString;
 /*
@@ -229,12 +232,12 @@ bool SortingCompetition::prepareData()
 */
 void SortingCompetition::sortData()
 {
-    bubbleSort();
+    //bubbleSort();
+    mergeSort(0,getWordCount()-1);
 }
 
 void SortingCompetition::outputData(const string& outputFileName)
 {
-    cout<<"inside outputData"<<endl;
     //output sorted data (in words2)
     fout.open(outputFileName.c_str(), ios::out);
     if(!fout.good())
@@ -244,7 +247,7 @@ void SortingCompetition::outputData(const string& outputFileName)
 
     for(size_t i = 0; i < wordCount; i++)
     {
-        cout << &(words2[i][1]) << " " << words2[i][0]<< endl;
+        fout << &(words2[i][1])<<endl;
     }
     fout.close();
 
@@ -254,20 +257,26 @@ void SortingCompetition::outputData(const string& outputFileName)
 
 int SortingCompetition::compareWords(char* str1, char* str2)
 {
+    //char dummy1 = str1[0];
+    //char dummy2 = str2[0];
+    //cout<<dummy1<<" "<<dummy2<<endl;
+    //cout<<(str1[0] > str2[0]?"True greater":"False less than")<<endl;
+
+
     if (str1[0] > str2[0])
     {
-        return -1;
+        return 1;
     }
 
-    else if(str1[0] > str2[0])
+    else if(str1[0] < str2[0])
     {
-        return 1;
+        return -1;
     }
     else
     {
         return strcmp(&(str1[1]), &(str2[1]));
     }
-
+    return 0;
 }
 
 /*void quicksort(vector<char*>& wordArr, size_t start, size_t end)
@@ -281,11 +290,118 @@ void SortingCompetition::bubbleSort(){
             if (compareWords(words2[y],words2[y+1])== 1){
                 char* temp1 =words2[y+1];
                 words2[y+1]=words2[y];
-                words[y] = temp1;
+                words2[y] = temp1;
 
             }
         }
 
     }
 }
+void SortingCompetition::merge(int low, int middle, int high){
 
+    char** temp = new char*[high+1];
+
+    int kk;
+    int leftCounter = low;
+    int rightCounter = middle+1;
+    int tempCounter = low;
+
+    //put values into temporary array where comparing values in right and left
+    //array and then populating temporary array according to lowest value
+    while((leftCounter<=middle)&&(rightCounter<=high)){
+        //would need overloaded compare
+        if(compareWords(words2[leftCounter],words2[rightCounter])!=1){
+           temp[tempCounter] = words2[leftCounter];
+           leftCounter++;
+        }
+        else{
+            temp[tempCounter] = words2[rightCounter];
+            rightCounter++;
+        }
+        tempCounter++;
+    }
+    //fill rest of array with remainder of values from left or right array
+    //that has not been fully iterated through yet
+    if(leftCounter>middle){
+       for(kk = rightCounter;kk<=high;kk++){
+           temp[tempCounter] = words2[kk];
+           tempCounter++;
+       }
+    }
+
+    else{
+        for(kk=leftCounter;kk<=middle;kk++){
+            temp[tempCounter] = words2[kk];
+            tempCounter++;
+        }
+    }
+
+    //reassign passed array to the now ordered elements in temp
+    for(int m = low;m<=high;m++){
+        words2[m] = temp[m];
+    }
+
+    //free memory
+    delete[] temp;
+
+}
+
+void SortingCompetition::mergeSort(int left, int right){
+    int middle;
+
+    if(left<right){
+        middle = (left+right)/2;
+        //continuatlly divides left side of A into smaller partitions
+        mergeSort(left,middle);
+
+        //continuatlly divides right side of A into smaller partitions
+        mergeSort(middle+1,right);
+
+        merge(left,middle,right);
+
+
+    }
+}
+
+void SortingCompetition::algorithmTester(void){/*
+   int A = 1;
+   int stepSize = 1;
+   int max = 10;
+   int sortingCount = 2;
+   while(A*stepSize<max){
+       makeRandomFile(A*stepSize,"RandomInput.txt");
+       for(int i = 0;i<sortingCount;i++){
+           int sumRuntime = 0;
+           for(int j = 0;j<30;j++){
+
+                //declare 2 time points
+                std::chrono::time_point<std::chrono::system_clock> start, end;
+
+                //store current time (now()) in start
+                start = std::chrono::system_clock::now();
+
+                //decide which sorting method to use
+                switch(i){
+                    case 0:
+                        //bubbleSort(1)
+                }
+
+                //store time(now()) in end
+                end = std::chrono::system_clock::now();
+
+                //get No. of seconds elapsed & output duration
+                //need to do this multiple times & get average
+                std::chrono::duration<double> elapsed_seconds = end-start;
+                std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+                std::time_t elapsed = elapsed_seconds.count();
+           }
+       }
+
+   }
+
+*/}
+
+void SortingCompetition::makingRandomFile(int size,char* name){
+
+}
