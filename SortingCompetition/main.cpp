@@ -11,18 +11,18 @@ using namespace std;
 int main()
 {
     SortingCompetition sorter("input.txt");
-
+    //store data from input file
     sorter.readData();
-
+    //prepare copy of data to be sorted
     sorter.prepareData();
 
     //declare 2 time points
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
-    //store time (now()) in start
+    //store current time (now()) in start
     start = std::chrono::system_clock::now();
 
-    //execute sort
+    //execute sort on copy of data
     sorter.sortData();
 
     //store time(now()) in end
@@ -36,6 +36,7 @@ int main()
     cout << "finished computation at " << std::ctime(&end_time)
          << "elapsed time: " << elapsed_seconds.count() << "s" << endl;
 
+    //output sorted data to output file
     sorter.outputData("output.txt");
     return 0;
 }
