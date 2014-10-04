@@ -41,7 +41,7 @@ private:
 
     //sorting functions
     void bubbleSort(void);
-    void quicksort(vector<char*>& wordArr, size_t start, size_t end);
+    void quicksort(char**& wordArr, int start, int end);
 
     void merge(int low, int middle, int high);
     void mergeSort(int left, int right);

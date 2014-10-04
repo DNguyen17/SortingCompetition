@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    SortingCompetition sorter("input.txt");
+    SortingCompetition sorter("input2.txt");
     //store data from input file
     sorter.readData();
     //prepare copy of data to be sorted
