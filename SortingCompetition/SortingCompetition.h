@@ -17,7 +17,7 @@ private:
     int setDataSize; //for switching algorithms based on size
     vector<char*> words;
     char** words2;
-    int previousWordCount;
+//    int previousWordCount;
     int wordCount;
 
 
@@ -25,32 +25,27 @@ private:
 
     //private functions
         //setter,getters
-    void SortingCompetition::setSetDataSize(int newSize);
-    void SortingCompetition::setSetDataSize(int newSize);
+    void  setSetDataSize(int newSize);
+    int getSetDataSize();
+    vector<char*>  getWords(void);
+    char**  getWords2(void);
+    void  setWords2(char** newWords2);
+    void  setWordCount(int count);
+    int  getWordCount(void);
+//    void  setPreviousWordCount(int count);
+//    int  getPreviousWordCount(void);
 
-    vector<char*> SortingCompetition::getWords(void);
-
-    char** SortingCompetition::getWords2(void);
-
-
-    void SortingCompetition::setWords2(char** newWords2);
-
-    void SortingCompetition::setWordCount(int count);
-
-    int SortingCompetition::getWordCount(void);
-
-    void SortingCompetition::setPreviousWordCount(int count);
-
-
-    int SortingCompetition::getPreviousWordCount(void);
-
+    //helper functions
+//    void  resize(int currentSize);
     int compareWords(char* one, char* str2);
-    void quicksort(vector<char*>& wordArr, size_t start, size_t end);
 
+    //sorting functions
+    void bubbleSort(void);
+    void quicksort(vector<char*>& wordArr, size_t start, size_t end);
 
 public:
     SortingCompetition(const string& inputFileName);
-    ~SortingcCompetition();
+    ~SortingCompetition();
     void setFileName(const string& inputFileName);
     bool readData();
     bool prepareData();

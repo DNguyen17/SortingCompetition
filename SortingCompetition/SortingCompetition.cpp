@@ -9,7 +9,7 @@ SortingCompetition::SortingCompetition(const string &inputFileName)
     //Don't need to initialize the vector???
     setDataSize = 0;
     wordCount = 0;
-    previousWordCount = 0;
+//    previousWordCount = 0;
 
 
 }
@@ -63,6 +63,7 @@ int SortingCompetition::getWordCount(void){
     return wordCount;
 }
 
+/*
 void SortingCompetition::setPreviousWordCount(int count){
     previousWordCount = count;
 }
@@ -70,14 +71,23 @@ void SortingCompetition::setPreviousWordCount(int count){
 int SortingCompetition::getPreviousWordCount(void){
     return previousWordCount;
 }
+*/
 
 /* function will process all words in input file and put them
  * sequentially in a vector in the order they were in in the input file
  * */
 
 bool SortingCompetition::readData(){
-    //store off the size of the previous wordCount
-    setPreviousWordCount(words.size());
+
+    for(size_t i = 0; i < getWordCount(); i++)
+    {
+        delete[] words2[i];
+    }
+    delete[] words2;
+
+/*   //store off the size of the previous wordCount
+    setPreviousWordCount(words.size());*/
+
     //clear all existing words in the vector in order that
     //if readData run multiple times that words are not just concatenated
     //onto the end of the existed vector from a previous run
@@ -100,6 +110,8 @@ bool SortingCompetition::readData(){
         strcpy(words.at(words.size()-1),buffer.c_str());
     }
 
+    //set wordcount after input function finishes
+    setWordCount(words.size());
     //close input file
     fin.close();
     //function complete so return true as success
@@ -115,27 +127,22 @@ bool SortingCompetition::prepareData(){
     bool x = false;
 
 
-    for(size_t i = 0; i < getPreviousWordCount(); i++)
-    {
-        delete[] words2[i];
-    }
-    delete[] words2;
-
-
     //copy data from original data structure over
     /* Loop first finds the length of the word, and then
      * creates length prefixed strings
      * */
 
     //create initialized char** that will hold the copied data
-    words2 = new char*[10];
+    //words2 = new char*[10];
     //initialize elements of words2
-    for(int k = 0;k<10;k++){
+/*    for(int k = 0;k<10;k++){
         words2[k] = NULL;
     }
-
+*/
     //counter to help with resizing
-    int count = 0;
+//    int count = 0;
+
+    words2 = new char*[words.size()];
 
     for(size_t i = 0; i < words.size(); i++)
     {
@@ -153,14 +160,14 @@ bool SortingCompetition::prepareData(){
 
         //add new length prefixed string to end of words2
         words2[i] = newString;
-
+/*
         count++;
         //resize if list is full
         if(count>=10){
             resize(i);
             count = 0;
         }
-
+*/
     }
 
     //if no errors occured return true
@@ -172,6 +179,7 @@ bool SortingCompetition::prepareData(){
 /* function resizes the dynamically created copy of the words
  * list */
 
+/*
 void SortingCompetition::resize(int currentSize){
    //dynammically create new list for words2
     char** tempWords2 = new char*[currentSize+1+10];
@@ -194,7 +202,7 @@ void SortingCompetition::resize(int currentSize){
     words2 = tempWords2;
 
 }
-
+*/
 
 /*
 bool SortingCompetition::prepareData()
@@ -221,11 +229,12 @@ bool SortingCompetition::prepareData()
 */
 void SortingCompetition::sortData()
 {
-
+    bubbleSort();
 }
 
 void SortingCompetition::outputData(const string& outputFileName)
 {
+    cout<<"inside outputData"<<endl;
     //output sorted data (in words2)
     fout.open(outputFileName.c_str(), ios::out);
     if(!fout.good())
@@ -233,9 +242,9 @@ void SortingCompetition::outputData(const string& outputFileName)
         cerr << "file could not be opened" << endl;
     }
 
-    for(size_t i = 0; i < words2.size(); i++)
+    for(size_t i = 0; i < wordCount; i++)
     {
-        fout << words2.at(i) << " " << strlen(words2.at(i)) << endl;
+        cout << &(words2[i][1]) << " " << words2[i][0]<< endl;
     }
     fout.close();
 
@@ -245,22 +254,38 @@ void SortingCompetition::outputData(const string& outputFileName)
 
 int SortingCompetition::compareWords(char* str1, char* str2)
 {
-    if (strlen(str1) < strlen(str2))
+    if (str1[0] > str2[0])
     {
         return -1;
     }
 
-    else if(strlen(str1) > strlen(str2))
+    else if(str1[0] > str2[0])
     {
         return 1;
     }
     else
     {
-        return strcmp(str1, str2);
+        return strcmp(&(str1[1]), &(str2[1]));
     }
+
 }
 
 /*void quicksort(vector<char*>& wordArr, size_t start, size_t end)
 {
 
 }*/
+
+void SortingCompetition::bubbleSort(){
+    for(int j = 0; j<getWordCount();j++){
+        for(int y = 0;y<(getWordCount()-1);y++){
+            if (compareWords(words2[y],words2[y+1])== 1){
+                char* temp1 =words2[y+1];
+                words2[y+1]=words2[y];
+                words[y] = temp1;
+
+            }
+        }
+
+    }
+}
+
