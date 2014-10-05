@@ -1,4 +1,6 @@
 #include "SortingCompetition.h"
+#include <algorithm>
+#include <ctime>
 
 //Constructor and Destructor
 SortingCompetition::SortingCompetition(const string &inputFileName){
@@ -130,11 +132,7 @@ bool SortingCompetition::prepareData(){
         newString[0] = length;
         //add prefix to beginning of word
         strcpy(&(newString[1]),words[i]);
-        /*char* dummy = newString;
-        cout<<newString<<endl;
-        cout<<newString[0]<<endl;
-        cout<<"length of string "<<strlen(newString)<<endl;
-        cout<<&(newString[1])<<endl;*/
+
         //add new length prefixed string to end of words2
         words2[i] = newString;
 
@@ -149,7 +147,7 @@ bool SortingCompetition::prepareData(){
 void SortingCompetition::sortData(){
     //bubbleSort();
     //mergeSort(0,getWordCount()-1);
-
+    //std::sort(words.begin(), words.end());
     quicksort(words2, 0, getWordCount()-1);
 }
 
@@ -192,15 +190,19 @@ int SortingCompetition::compareWords(char* str1, char* str2){
 //Quicksort from http://www.algolist.net/Algorithms/Sorting/Quicksort
 void SortingCompetition::quicksort(char**& wordArr, int start, int end){
 
-    int pivot = (start+end)/2;
-    int i = start, j = end;
+    int med = (start+end)/2;
+    char* pivot = new char[wordArr[med][0]+1];
+    strcpy(pivot,wordArr[med]);
+
+    int i = start;
+    int j = end;
     char* temp;
-    while(i <=j){
-        while(compareWords(wordArr[i],wordArr[pivot]) <= -1){
+    while(i <= j){
+        while(compareWords(wordArr[i],pivot) <= -1){
             i++;
         }
 
-        while(compareWords(wordArr[j],wordArr[pivot]) >= 1){
+        while(compareWords(wordArr[j],pivot) >= 1){
             j--;
         }
 
@@ -211,6 +213,7 @@ void SortingCompetition::quicksort(char**& wordArr, int start, int end){
             i++;
             j--;
         }
+
     }
 
     //recursion

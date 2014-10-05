@@ -17,14 +17,9 @@ private:
     int setDataSize; //for switching algorithms based on size
     vector<char*> words;
     char** words2;
-//    int previousWordCount;
     int wordCount;
 
-
-    //vector<char*> words2;
-
-    //private functions
-        //setter,getters
+    //setter,getters
     void  setSetDataSize(int newSize);
     int getSetDataSize();
     vector<char*>  getWords(void);
@@ -32,23 +27,19 @@ private:
     void  setWords2(char** newWords2);
     void  setWordCount(int count);
     int  getWordCount(void);
-//    void  setPreviousWordCount(int count);
-//    int  getPreviousWordCount(void);
+
 
     //helper functions
-//    void  resize(int currentSize);
     int compareWords(char* one, char* str2);
 
     //sorting functions
     void bubbleSort(void);
     void quicksort(char**& wordArr, int start, int end);
-
     void merge(int low, int middle, int high);
     void mergeSort(int left, int right);
 
     //tester functions
     void algorithmTester(void);
-
     void makingRandomFile(int size,char* name);
 
 public:
