@@ -191,6 +191,8 @@ int SortingCompetition::compareWords(char* str1, char* str2){
 void SortingCompetition::quicksort(char**& wordArr, int start, int end){
 
     int med = (start+end)/2;
+    //srand(time(0));
+    //int med = rand()%(getWordCount()-1);
     char* pivot = new char[wordArr[med][0]+1];
     strcpy(pivot,wordArr[med]);
 
