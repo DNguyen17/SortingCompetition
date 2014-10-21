@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <cstring>
+#include <omp.h>
 using namespace std;
 
 class SortingCompetition
@@ -17,14 +18,9 @@ private:
     int setDataSize; //for switching algorithms based on size
     vector<char*> words;
     char** words2;
-//    int previousWordCount;
     int wordCount;
 
-
-    //vector<char*> words2;
-
-    //private functions
-        //setter,getters
+    //setter,getters
     void  setSetDataSize(int newSize);
     int getSetDataSize();
     vector<char*>  getWords(void);
@@ -32,24 +28,21 @@ private:
     void  setWords2(char** newWords2);
     void  setWordCount(int count);
     int  getWordCount(void);
-//    void  setPreviousWordCount(int count);
-//    int  getPreviousWordCount(void);
+
 
     //helper functions
-//    void  resize(int currentSize);
     int compareWords(char* one, char* str2);
 
     //sorting functions
     void bubbleSort(void);
-    void quicksort(vector<char*>& wordArr, size_t start, size_t end);
-
+    void quicksort(char **wordArr, int start, int end);
+    void quicksort2(int start, int end);
+    void quicksort2WithInsert(int start, int end, int passOff);
+    void insertion_sort(int start,int end);
+    void multisort(int start, int end, int passOff);
     void merge(int low, int middle, int high);
     void mergeSort(int left, int right);
 
-    //tester functions
-    void algorithmTester(void);
-
-    void makingRandomFile(int size,char* name);
 
 public:
     SortingCompetition(const string& inputFileName);
